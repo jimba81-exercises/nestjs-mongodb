@@ -51,23 +51,7 @@ dev-docker$ rm -rf .git # Delete git folder inside workspace
 dev-docker$ chmod -R 777 * # Optional: Set permission
 ```
 
-### 2.3.2. Setup Project Environment
-- REF: https://docs.nestjs.com/techniques/configuration
-1. Install npm modules
-    ```console
-    dev-docker$ cd workspace
-    dev-docker$ npm i --save @nestjs/config
-    ```
-
-2. Add to `src/app.modules.ts`
-    ```
-    imports: [ ...,
-      ConfigModule.forRoot({  envFilePath: './env/.env' })
-    ```
-    - Env variables can be accessed by `process.env.XXX`
-
-
-### 2.3.3. Install Swagger
+### 2.3.2. Install Swagger
 - Ref: https://docs.nestjs.com/openapi/introduction
   ```console
   dev-docker$ cd workspace
@@ -94,6 +78,26 @@ dev-docker$ chmod -R 777 * # Optional: Set permission
     }
     ```
 - Check Swagger page (http://localhost:3000/api)
+
+### 2.3.3. Install MongoDB
+- Install mongoose
+  ```console
+  dev-docker$ npm install --save @nestjs/mongoose mongoose
+  ```
+- Configure the connection from `app.module.ts`
+  ```ts
+  import { Module } from '@nestjs/common';
+  import { MongooseModule } from '@nestjs/mongoose';
+  import { UserModule } from './user/user.module';
+
+  @Module({
+    imports: [
+      MongooseModule.forRoot('mongodb://localhost/nest'), // Replace with your MongoDB connection string
+      UserModule,
+    ],
+  })
+  export class AppModule {}
+  ```
 
 <br>
 
