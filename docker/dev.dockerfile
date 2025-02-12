@@ -29,3 +29,6 @@ RUN npm install -g @nestjs/cli@$NESTJS_CLI_VERSION
 
 USER node
 WORKDIR /home/node/workspace
+
+CMD ["sh", "-c", "echo 'This is DEV Container. Run /bin/bash to start the development environment'"]
+

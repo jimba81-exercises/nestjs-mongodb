@@ -17,5 +17,9 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false
-  }
+  },
+  "exclude": [
+    "src/modules/db/db.service.spec.ts",
+    "src/modules/db/db.service.ts"
+  ]
 }

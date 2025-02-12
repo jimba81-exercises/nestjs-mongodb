@@ -41,7 +41,9 @@ services:
             context: .
             dockerfile: ./docker/prod.dockerfile
         ports:
-            - "${HOST_PORT:-7001}:${PORT:-7001}"
+            - "${HOST_PORT:-3001}:${PORT:-3001}"
+        depends_on:
+            - mongodb            
         volumes:
             - ./logs:/home/node/logs
         
