@@ -2,9 +2,9 @@ version: "3.7"
 name: nestjs-mongodb
 
 services:
-    database:
+    mongodb:
         image: mongo:${DB_IMG_TAG:-latest}
-        container_name: mongo
+        container_name: mongodb
         volumes:
             - './db-data:/data/db'
         ports:
@@ -25,6 +25,8 @@ services:
             - ${ENV_FILE_PATH:-env/.dev.env}
         ports:
             - "${HOST_SERVER_PORT:-3000}:${SERVER_PORT:-3000}"            
+        depends_on:
+            - mongodb
         volumes:
             - ~/.bash_history:/home/node/.bash_history
             - ./workspace:/home/node/workspace
