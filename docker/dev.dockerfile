@@ -1,6 +1,6 @@
 # Arguments 
 ARG NODE_VERSION=20.9.0
-ARG NESTJS_CLI_VERSION=11.0.5
+ARG NESTJS_CLI_VERSION=11.0.2
 
 # ---- Builder ---
 FROM node:${NODE_VERSION} AS base

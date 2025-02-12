@@ -20,13 +20,12 @@ services:
             #    NODE_VERSION: 20.9.0
 
         user: ${CUR_UID:-1000:1000} # This is required in order to access host's filesystem from the docker container
-        network_mode: "host"
         stdin_open: true # docker run -i
         tty: true        # docker run -t
         env_file:
             - ${ENV_FILE_PATH:-env/.dev.env}
         ports:
-            - "${HOST_PORT:-7001}:${PORT:-7001}"            
+            - "${HOST_PORT:-3000}:${PORT:-3000}"            
         volumes:
             - ~/.bash_history:/home/node/.bash_history
             - ./workspace:/home/node/workspace
@@ -60,7 +59,7 @@ services:
 # - Run Dev:           > docker compose run --rm dev bash
 # - Run Dev with env:  > ENV_FILE_PATH=./env/.local.env docker compose run --rm dev bash
 
-# RUN REL
+# RUN PROD
 # - Run with rm:       > docker compose run --rm prod 
 # - Run :              > docker compose up 
 # - Run envfile:       > docker compose --env-file $ENV_FILE_PATH

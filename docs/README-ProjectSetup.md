@@ -66,15 +66,6 @@ dev-docker$ chmod -R 777 * # Optional: Set permission
     ```
     - Env variables can be accessed by `process.env.XXX`
 
-3. Add git submodules
-    ```console
-    $ mkdir -p ${PROJECT_PATH}/workspace/submodules
-    $ cd ${PROJECT_PATH}
-    $ git submodule add https://github.com/bayer-int/BRD_GXP_SilverLightCommon workspace/submodules/silverlight-common
-    $ git submodule update --init --recursive
-    ```
-    - Make sure both of the submodules has been checked out to the right branch before using.
-
 
 ### 2.3.3. Install Swagger
 - Ref: https://docs.nestjs.com/openapi/introduction
