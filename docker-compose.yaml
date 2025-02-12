@@ -1,0 +1,67 @@
+version: "3.7"
+name: nestjs-mongodb
+
+services:
+    database:
+        image: mongo::${DB_IMG_TAG:-latest}
+        container_name: nestjs-mongodb-db
+        restart: always
+        volumes:
+            - './data:/data/db'
+        ports:
+            - '27017:27017'
+    dev:
+        image: nestjs-mongodb-dev:${IMG_TAG:-latest}
+        container_name: nestjs-mongodb-dev
+        build:
+            context: .
+            dockerfile: ./docker/dev.dockerfile      
+            #args:
+            #    NODE_VERSION: 20.9.0
+
+        user: ${CUR_UID:-1000:1000} # This is required in order to access host's filesystem from the docker container
+        network_mode: "host"
+        stdin_open: true # docker run -i
+        tty: true        # docker run -t
+        env_file:
+            - ${ENV_FILE_PATH:-env/.dev.env}
+        ports:
+            - "${HOST_PORT:-7001}:${PORT:-7001}"            
+        volumes:
+            - ~/.bash_history:/home/node/.bash_history
+            - ./workspace:/home/node/workspace
+            - ./logs:/home/node/logs
+
+    prod:
+        image: nestjs-mongodb-prod:${IMG_TAG:-latest}
+        container_name: nestjs-mongodb-prod
+        env_file:
+            - ${ENV_FILE_PATH:-env/.prod.env}
+        build:
+            context: .
+            dockerfile: ./docker/prod.dockerfile
+        ports:
+            - "${HOST_PORT:-7001}:${PORT:-7001}"
+        volumes:
+            - ./logs:/home/node/logs
+        
+        
+# Commands
+
+# PREPARE
+# Set envfile path:    > export ENV_FILE_PATH=<env file path>
+
+# BUILD
+# - Build:             > docker compose build
+# - Build with args:   > docker compose build --build-arg NODE_VERSION="16.14.2"
+# - Build Clean:       > docker compose build --no-cache
+
+# RUN DEV CONTAINER
+# - Run Dev:           > docker compose run --rm dev bash
+# - Run Dev with env:  > ENV_FILE_PATH=./env/.local.env docker compose run --rm dev bash
+
+# RUN REL
+# - Run with rm:       > docker compose run --rm prod 
+# - Run :              > docker compose up 
+# - Run envfile:       > docker compose --env-file $ENV_FILE_PATH
+# - Stop Rel:          > docker compose down
