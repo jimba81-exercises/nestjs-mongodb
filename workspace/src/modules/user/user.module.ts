@@ -9,7 +9,7 @@ import { User, UserSchema } from './user.schema';
   imports: [
     DbModule,
     MongooseModule.forFeature([{ 
-        name: User.name, 
+        name: User.name,  // User.name is just "User". 'User.name' is a fancy way to get the class name.
         schema: UserSchema 
       } // Register the schema
     ]), 
