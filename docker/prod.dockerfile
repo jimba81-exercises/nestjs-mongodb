@@ -1,9 +1,9 @@
 # Arguments 
-ARG NODE_VERSION=18.12.0
-ARG PORT=5000
+ARG NODE_VERSION=20.9.0
+ARG NESTJS_CLI_VERSION=11.0.2
 
 # ---- Build ---
-FROM silverlight-api-server-dev AS builder
+FROM nestjs-mongodb-dev AS builder
 
 USER node
 WORKDIR /home/node
@@ -19,14 +19,14 @@ RUN find / -perm /6000 -type f -exec chmod a-s {} \; || true
 # ---- Release ----
 FROM node:${NODE_VERSION}-alpine AS release
 ARG NODE_VERSION
-ARG PORT
+
 LABEL node_version="$NODE_VERSION"
 
 # Install required packages
 #RUN apk add --update --no-cache openssh sshpass
 
 # Remove setuid and setgid from files
-RUN find / -perm /6000 -type f -exec chmod a-s {} \; || true
+#RUN find / -perm /6000 -type f -exec chmod a-s {} \; || true
 
 USER node
 WORKDIR /home/node
@@ -39,10 +39,11 @@ RUN npm ci --only=production
 COPY --chown=node --from=builder /home/node/dist ./dist
 
 # Copy DB pem file
-COPY --chown=node  ./workspace/global-bundle.pem ./
+#COPY --chown=node  ./workspace/global-bundle.pem ./
 
 # Create shared folders
 RUN mkdir -p /home/node/logs
 
 # TODO: port shall be defined in the env file
-CMD npm run start:prod
+#CMD npm run start:prod
+CMD ["node", "dist/main.js"]
