@@ -1,0 +1,5 @@
+*.pyc
+.vscode/
+#.git/  # This is needed to generate git.info.txt
+etc/config.json
+deployment
