@@ -53,22 +53,22 @@ dev-docker$ chmod -R 777 * # Optional: Set permission
 
 ### 2.3.2. Binding Server to 0.0.0.0
 1. Update `workspace/package.json`
-  ```json
-  ...
-  "scripts" {
+    ```json
     ...
-    "start": "nest start --host 0.0.0.0",
-    "start:dev": "nest start --host 0.0.0.0 --watch",
-    ...
-  }
-  ```
+    "scripts" {
+      ...
+      "start": "nest start --host 0.0.0.0",
+      "start:dev": "nest start --host 0.0.0.0 --watch",
+      ...
+    }
+    ```
 2. Update `workspace/src/main.ts`
-  ```ts
-  async function bootstrap() {
-    ...
-    await app.listen(port, '0.0.0.0');
-  }
-  ```
+    ```ts
+    async function bootstrap() {
+      ...
+      await app.listen(port, '0.0.0.0');
+    }
+    ```
 
 ### 2.3.3. Install Swagger
 - Ref: https://docs.nestjs.com/openapi/introduction
@@ -100,23 +100,23 @@ dev-docker$ chmod -R 777 * # Optional: Set permission
 
 ### 2.3.4. Install MongoDB
 - Install mongoose
-  ```console
-  dev-docker$ npm install --save @nestjs/mongoose mongoose
-  ```
+    ```console
+    dev-docker$ npm install --save @nestjs/mongoose mongoose
+    ```
 - Configure the connection from `app.module.ts`
-  ```ts
-  import { Module } from '@nestjs/common';
-  import { MongooseModule } from '@nestjs/mongoose';
-  import { UserModule } from './user/user.module';
+    ```ts
+    import { Module } from '@nestjs/common';
+    import { MongooseModule } from '@nestjs/mongoose';
+    import { UserModule } from './user/user.module';
 
-  @Module({
-    imports: [
-      MongooseModule.forRoot('mongodb://localhost/nest'), // Replace with your MongoDB connection string
-      UserModule,
-    ],
-  })
-  export class AppModule {}
-  ```
+    @Module({
+      imports: [
+        MongooseModule.forRoot('mongodb://localhost/nest'), // Replace with your MongoDB connection string
+        UserModule,
+      ],
+    })
+    export class AppModule {}
+    ```
 
 <br>
 
