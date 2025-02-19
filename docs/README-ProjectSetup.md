@@ -51,7 +51,26 @@ dev-docker$ rm -rf .git # Delete git folder inside workspace
 dev-docker$ chmod -R 777 * # Optional: Set permission
 ```
 
-### 2.3.2. Install Swagger
+### 2.3.2. Binding Server to 0.0.0.0
+1. Update `workspace/package.json`
+  ```json
+  ...
+  "scripts" {
+    ...
+    "start": "nest start --host 0.0.0.0",
+    "start:dev": "nest start --host 0.0.0.0 --watch",
+    ...
+  }
+  ```
+2. Update `workspace/src/main.ts`
+  ```ts
+  async function bootstrap() {
+    ...
+    await app.listen(port, '0.0.0.0');
+  }
+  ```
+
+### 2.3.3. Install Swagger
 - Ref: https://docs.nestjs.com/openapi/introduction
   ```console
   dev-docker$ cd workspace
@@ -79,7 +98,7 @@ dev-docker$ chmod -R 777 * # Optional: Set permission
     ```
 - Check Swagger page (http://localhost:3000/api)
 
-### 2.3.3. Install MongoDB
+### 2.3.4. Install MongoDB
 - Install mongoose
   ```console
   dev-docker$ npm install --save @nestjs/mongoose mongoose
