@@ -6,7 +6,7 @@ services:
         image: mongo:${DB_IMG_TAG:-latest}
         container_name: mongodb
         volumes:
-            - './db-data:/data/db'
+            - '${VOLUME_DB_DATA:-./docker-volumes/db-data}:/data/db'
         ports:
             - "${HOST_DB_PORT:-27017}:${DB_PORT:-27017}"
     dev:
@@ -30,7 +30,7 @@ services:
         volumes:
             - ~/.bash_history:/home/node/.bash_history
             - ./workspace:/home/node/workspace
-            - ./logs:/home/node/logs
+            - '${VOLUME_LOGS:-./docker-volumes/logs}:/home/node/logs'
 
     prod:
         image: nestjs-mongodb-prod:${IMG_TAG:-latest}
@@ -45,7 +45,7 @@ services:
         depends_on:
             - mongodb            
         volumes:
-            - ./logs:/home/node/logs
+            - '${VOLUME_LOGS:-./docker-volumes/logs}:/home/node/logs'
         
         
 # Commands
